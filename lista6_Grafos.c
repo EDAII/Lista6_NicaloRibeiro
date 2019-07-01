@@ -1,15 +1,16 @@
 //Lista 6 - ED2
 //Nícalo Ribeiro - 16/0016169
 
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define NAOVISITADO 0
 #define VISITADO 1
 
 static int menorDistancia = -1;
 static int *menorCaminho;
+double tempoExec = 0, tempoMontagem = 0;
 
 typedef struct TipoNoAdj *TipoApontador;
 
@@ -60,12 +61,16 @@ int main()
     printf("Digite a origem :\n");
     scanf("%d", &origem);
     vertice = montaGrafo(&numCidades, entradaArq);
+    printf("O grafo demorou %.8lf segundos para ser montado.\n", tempoMontagem);
     if (origem < 0 || origem >= numCidades)
     {
         printf("Origem incorreta\n");
         return 0;
     }
+
     buscaMelhorTrajeto(vertice, origem, numCidades);
+    printf("A busca pelo melhor caminho durou %.8lf segundos.\n", tempoExec);
+
     freeGrafo(vertice, numCidades);
     free(entradaArq);
 
@@ -112,6 +117,11 @@ TipoVertice *montaGrafo(int *numCidades, char *entradaArq)
     }
     fscanf(fp, "%d\n", numCidades);
     vertice = (TipoVertice *)malloc((*numCidades) * sizeof(TipoVertice));
+
+    srand(0);
+    clock_t time;
+
+    time = clock();
     FGVazio(vertice, *numCidades);
 
     while (fscanf(fp, "%d %d %d\n", &cidade1, &cidade2, &distancia) != EOF)
@@ -120,6 +130,9 @@ TipoVertice *montaGrafo(int *numCidades, char *entradaArq)
         insereAresta(vertice, cidade1, cidade2, distancia);
         insereAresta(vertice, cidade2, cidade1, distancia);
     }
+
+    time = clock() - time;
+    tempoMontagem = ((double)time) / CLOCKS_PER_SEC;
 
     fclose(fp);
     return vertice;
@@ -231,7 +244,16 @@ void buscaMelhorTrajeto(TipoVertice *vertice, int origem, int numCidades)
     int caminho[numCidades], i;
 
     menorCaminho = (int *)malloc(numCidades * sizeof(int));
+
+    srand(0);
+    clock_t time;
+
+    time = clock();
     buscaDFS(vertice, origem, numCidades, 0, caminho, 0);
+    time = clock() - time;
+
+    tempoExec = ((double)time) / CLOCKS_PER_SEC;
+
     imprimeCaminho(vertice, menorCaminho, numCidades);
     free(menorCaminho);
 }
