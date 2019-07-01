@@ -13,7 +13,8 @@
 * Para realizar tal cálculo, o programa realiza a leitura de um arquivo de texto que segue o seguinte padrão :  
     * A **PRIMEIRA LINHA** corresponde ao **NÚMERO DE VÉRTICES** (que representam **CIDADES**) do grafo;    
     * As linhas seguintes correspondem a um **VÉRTICE ( CIDADE )** seguido do **VÉRTICE** em que compartilha uma **ARESTA** e a **'DISTÂNCIA'** entre eles.   
-    * Os arquivos padrẽs de entrada são : **'entrada.txt'**, **'entrada2.txt'**, **'entrada3.txt'**, 
+    * Os arquivos padrẽs de entrada são : **'entrada.txt'**, **'entrada2.txt'**, **'entrada3.txt'**.  
+* Por fim, o programa imprime no terminal uma árvore gerada a partir da ordem dos vértices visitados no menor caminho.  
 * Sinta-se livre para realizar modificações ou criar o seu próprio arquivo seguindo o padão citado.  
 
 
